@@ -23,7 +23,7 @@ public class S001_M_WordBreakI {
      * 解释: 返回 true 因为 "leetcode" 可以由 "leet" 和 "code" 拼接成。
      */
 
-    // 线性搜索
+    // 线性搜索 --> aaaaaaa {aaa,aaaa} 失败
     public boolean wordBreak1(String s, List<String> wordDict) {
         // 这种方法遇到重复字符就会失败,如：aaaaaaa，["aaa","aaaa"]
         int length = s.length();
@@ -40,7 +40,7 @@ public class S001_M_WordBreakI {
         return true;
     }
 
-    // 字典树
+    // 字典树 --> aaaaaaa {aaa,aaaa} 失败
     public boolean wordBreak2(String s, List<String> wordDict) {
 
         TrieNode root = new TrieNode('/');
@@ -78,7 +78,7 @@ public class S001_M_WordBreakI {
         return start.isEnd;
     }
 
-    // 字典树 + 深度优先搜索（dfs）
+    // 字典树 + 深度优先搜索（dfs） --> aaaaaaa {aaa,aaaa} 失败
     public boolean wordBreak3(String s, List<String> wordDict) {
 
         TrieNode root = new TrieNode('/');
@@ -116,10 +116,32 @@ public class S001_M_WordBreakI {
         return start.isEnd;
     }
 
+    // 字典树 + 回溯 --> 超时 OOT
+    public boolean wordBreak4(String s, List<String> wordDict) {
+
+        // 利用字典树节点构建字典树
+        Trie trie = new Trie();
+        for (String word : wordDict) {
+            trie.insert(word);
+        }
+        return trie.find(s, 0);
+    }
+
+    // 字典树 + 回溯 + 记忆法
+    public boolean wordBreak5(String s, List<String> wordDict) {
+
+        // 利用字典树节点构建字典树
+        Trie trie = new Trie();
+        for (String word : wordDict) {
+            trie.insert(word);
+        }
+        return trie.find(s, 0);
+    }
+
     // 判断儿子节点是否都为空
     private boolean isChildrenEmpty(TrieNode[] children) {
         for (TrieNode child : children) {
-            if(!isNull(child)) {
+            if (!isNull(child)) {
                 return false;
             }
         }
@@ -160,15 +182,64 @@ public class S001_M_WordBreakI {
     // 字典树
     static class Trie {
 
+        TrieNode root = new TrieNode('/');
+
+        int[] memory = new int[301];
+
+        public void insert(String word) {
+            TrieNode tmp = root;
+            for (int i = 0; i < word.length(); i++) {
+                char c = word.charAt(i);
+                if (tmp.children[c - 'a'] == null) {
+                    tmp.children[c - 'a'] = new TrieNode(c);
+                }
+                tmp = tmp.children[c - 'a'];
+            }
+            tmp.isEnd = true;
+        }
+
+        /**
+         * 查找在 [startPos ，s.length() - 1] 区间是否有合适的单词
+         *
+         * @param s        待搜索字符串
+         * @param startPos 搜索起始位置
+         * @return boolean
+         */
+        public boolean find(String s, int startPos) {
+            int len = s.length();
+            if(memory[startPos] == 1) {
+                return false;
+            }
+            if (startPos >= len) {
+                return true;
+            }
+            // 从s的第一位开始搜索，过程类似上面
+            TrieNode tmp = root;
+            for (int i = startPos; i < len; i++) {
+                char c = s.charAt(i);
+                TrieNode child = tmp.children[c - 'a'];
+                if (child == null) {
+                    // 遇到为空的节点，说明单词发生不匹配
+                    break;
+                }
+                tmp = child;
+                if (tmp.isEnd && find(s, i + 1)) {
+                    // 以 i 为新的起点，往下搜索
+                    return true;
+                }
+            }
+            memory[startPos] = 1;
+            return false;
+        }
     }
 
     @Test
     public void test() {
         List<String> list = new ArrayList<>();
-        list.add("a");
-        list.add("b");
+        list.add("aaaa");
+        list.add("aaa");
         list.add("bbb");
         list.add("bbbb");
-        System.out.println(wordBreak3("bb", list));
+        System.out.println(wordBreak4("aaaaaaa", list));
     }
 }
