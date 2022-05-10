@@ -1,15 +1,9 @@
 package com.marshio.code.leetcode.solutions;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.ObjectUtil;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 
@@ -132,7 +126,6 @@ public class S001_M_WordBreakI {
         return true;
     }
 
-
     private void buildTrieTree(TrieNode root, List<String> wordDict) {
         for (String word : wordDict) {
             if (word.isEmpty()) {
@@ -168,13 +161,14 @@ public class S001_M_WordBreakI {
     static class Trie {
 
     }
+
     @Test
     public void test() {
         List<String> list = new ArrayList<>();
-        list.add("aaaa");
-        list.add("aaa");
-        // list.add("b");
-        // list.add("cd");
-        System.out.println(wordBreak3("aaaaaaa", list));
+        list.add("a");
+        list.add("b");
+        list.add("bbb");
+        list.add("bbbb");
+        System.out.println(wordBreak3("bb", list));
     }
 }
