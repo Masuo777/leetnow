@@ -14,11 +14,12 @@ public class QEYJE01Test {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         int n = scan.nextInt();
-        int times = findOneTime(n);
+        // 数字
+        int times = findOneTimeI(n);
         System.out.println(times);
     }
 
-    private static int findOneTime(int n) {
+    private static int findOneTimeI(int n) {
         int times = 0;
         for (int i = n; i >= 0; i--) {
             times += numberOfOne(i + "");
@@ -28,12 +29,13 @@ public class QEYJE01Test {
 
     private static int numberOfOne(String s) {
         int time = 0;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if(c == '1') {
+        char[] chars = s.toCharArray();
+        for (char aChar : chars) {
+            if (aChar == '1') {
                 time++;
             }
         }
         return time;
     }
+
 }
