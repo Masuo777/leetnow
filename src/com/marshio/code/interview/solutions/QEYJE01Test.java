@@ -13,10 +13,15 @@ public class QEYJE01Test {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        System.out.println("输入整数 n：");
         int n = scan.nextInt();
         // 数字
         int times = findOneTimeI(n);
-        System.out.println(times);
+        System.out.println("出现次数：" + times);
+        System.out.println("Press any key to out.");
+        while (scan.next() != null){
+            System.exit(0);
+        }
     }
 
     private static int findOneTimeI(int n) {

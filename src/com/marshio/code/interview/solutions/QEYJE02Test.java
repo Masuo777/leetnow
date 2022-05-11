@@ -16,11 +16,13 @@ public class QEYJE02Test {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         // 字符串 s
+        System.out.println("输入第一个字符：");
         String s = scan.nextLine();
         // 字符串 t
+        System.out.println("输入第二个字符");
         String t = scan.nextLine();
         int times = findTnumInS(s,t);
-        System.out.println(times);
+        System.out.println("出现次数为："+ times);
     }
 
     private static int findTnumInS(String s, String t) {
