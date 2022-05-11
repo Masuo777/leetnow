@@ -16,12 +16,16 @@ public class QEYJE01Test {
         System.out.println("输入整数 n：");
         int n = scan.nextInt();
         // 数字
+        long start = System.currentTimeMillis();
         int times = findOneTimeI(n);
-        System.out.println("出现次数：" + times);
-        System.out.println("Press any key to out.");
-        while (scan.next() != null){
-            System.exit(0);
+        long end = System.currentTimeMillis();
+        System.out.println("出现次数：" + times + ",耗时：" + (end - start) + "ms");
+        System.out.println("Press 'q + enter' to quit.");
+        String next = scan.next();
+        while (!next.equals("q")) {
+            next = scan.next();
         }
+        System.exit(0);
     }
 
     private static int findOneTimeI(int n) {

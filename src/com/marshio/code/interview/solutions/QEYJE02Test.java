@@ -21,8 +21,16 @@ public class QEYJE02Test {
         // 字符串 t
         System.out.println("输入第二个字符");
         String t = scan.nextLine();
-        int times = findTnumInS(s,t);
-        System.out.println("出现次数为："+ times);
+        long start = System.currentTimeMillis();
+        int times = findTnumInS(s, t);
+        long end = System.currentTimeMillis();
+        System.out.println("出现次数为：" + times + ",耗时：" + (end - start) + "ms");
+        System.out.println("Press 'q + enter' to quit.");
+        String next = scan.next();
+        while (!next.equals("q")) {
+            next = scan.next();
+        }
+        System.exit(0);
     }
 
     private static int findTnumInS(String s, String t) {
